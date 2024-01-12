@@ -1,4 +1,7 @@
+// App.js
+
 import React, { useState, useEffect } from "react";
+import PokemonCard from "./components/PokemonCard";
 
 function App() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -7,11 +10,10 @@ function App() {
     const fetchPokemonData = async () => {
       try {
         const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=151" //currently showing only the first generation pokemon, some later generations are getting 404 errors
+          "https://pokeapi.co/api/v2/pokemon?limit=151"
         );
         const data = await response.json();
 
-        // Fetch details for each Pokemon
         const pokemonDetails = await Promise.all(
           data.results.map(async (pokemon) => {
             const detailsResponse = await fetch(pokemon.url);
@@ -30,14 +32,18 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Pokedex</h1>
-      <div className="pokemon-list">
-        {pokemonList.map((pokemon) => (
-          <div key={pokemon.id} className="pokemon-card">
-            <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-            <p>{pokemon.name}</p>
-          </div>
-        ))}
+      <h1 className="text-center">Pokedex</h1>
+      <div className="container">
+        <div className="row">
+          {pokemonList.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.id}
+              id={pokemon.id}
+              name={pokemon.name}
+              spriteUrl={pokemon.sprites.front_default}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
