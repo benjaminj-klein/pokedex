@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-//import "../styles/PokemonCardStyles.css";
+import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
 
 const PokemonCard = ({ id, name, spriteUrl, types }) => {
-  // Capitalize the Pokemon's name
   const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
-
-  // Determine background color based on types
   const backgroundColor = getBackgroundColor(types);
+  const [showModal, setShowModal] = useState(false);
 
   const cardIdStyle = {
     position: "absolute",
@@ -19,6 +17,10 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
 
   const cardStyle = {
     background: backgroundColor,
+  };
+
+  const handleCardClick = () => {
+    setShowModal(true);
   };
 
   function getBackgroundColor(types) {
@@ -65,16 +67,33 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
 
   return (
     <div className="col-lg-2 col-md-4 col-sm-12 mb-4">
-      <div className="card rounded" style={cardStyle}>
-        {/* Display Pokemon ID in the top left corner */}
+      <div
+        className="card rounded"
+        style={cardStyle}
+        onClick={handleCardClick} // Add onClick handler
+      >
         <div style={cardIdStyle}>{id}</div>
-
         <img src={spriteUrl} alt={name} className="card-img-top" />
         <div className="card-body d-flex flex-column align-items-center justify-content-end">
-          {/* Display capitalized Pokemon name */}
           <p className="card-text">{capitalizedName}</p>
         </div>
       </div>
+
+      {/* Blank Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{capitalizedName}'s Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Add any content you want for the modal */}
+          <p>This is a blank modal for {capitalizedName}.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
