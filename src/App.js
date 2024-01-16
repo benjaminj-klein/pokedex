@@ -41,6 +41,7 @@ function App() {
               id={pokemon.id}
               name={pokemon.name}
               spriteUrl={pokemon.sprites.front_default}
+              types={pokemon.types.map((type) => type.type.name)} // Extracting type names
             />
           ))}
         </div>
