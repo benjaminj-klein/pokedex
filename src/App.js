@@ -1,6 +1,12 @@
-// App.js
-
 import React, { useState, useEffect } from "react";
+import {
+  Navbar,
+  Container,
+  Form,
+  FormControl,
+  Button,
+  NavDropdown,
+} from "react-bootstrap";
 import PokemonCard from "./components/PokemonCard";
 
 function App() {
@@ -32,8 +38,47 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="text-center">Pokedex</h1>
-      <div className="container">
+      {/* Bootstrap Navbar with Search Bar and Dropdown */}
+      <Navbar bg="danger" variant="dark">
+        <Container>
+          <Navbar.Brand href="#home" style={{ color: "white" }}>
+            Pokedex
+          </Navbar.Brand>
+          <NavDropdown
+            title={<span style={{ color: "white" }}>Select Generation</span>}
+            id="basic-nav-dropdown"
+            className="ml-auto"
+          >
+            <NavDropdown.Item href="#nationalDex" style={{ color: "black" }}>
+              National Dex
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#generation1" style={{ color: "black" }}>
+              Generation 1
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#generation2" style={{ color: "black" }}>
+              Generation 2
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#generation3" style={{ color: "black" }}>
+              Generation 3
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#generation4" style={{ color: "black" }}>
+              Generation 4
+            </NavDropdown.Item>
+          </NavDropdown>
+          <Form className="d-flex">
+            <FormControl
+              type="search"
+              placeholder="Search"
+              className="mr-2"
+              aria-label="Search"
+            />
+            <Button variant="outline-light">Search</Button>
+          </Form>
+        </Container>
+      </Navbar>
+
+      {/* Container for PokemonCards */}
+      <div className="container mt-3">
         <div className="row">
           {pokemonList.map((pokemon) => (
             <PokemonCard
