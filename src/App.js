@@ -11,6 +11,7 @@ import PokemonCard from "./components/PokemonCard";
 
 function App() {
   const [pokemonList, setPokemonList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -36,6 +37,11 @@ function App() {
     fetchPokemonData();
   }, []);
 
+  // Filtered Pokemon list based on the search term
+  const filteredPokemonList = pokemonList.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="App">
       {/* Bootstrap Navbar with Search Bar and Dropdown */}
@@ -49,21 +55,7 @@ function App() {
             id="basic-nav-dropdown"
             className="ml-auto"
           >
-            <NavDropdown.Item href="#nationalDex" style={{ color: "black" }}>
-              National Dex
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#generation1" style={{ color: "black" }}>
-              Generation 1
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#generation2" style={{ color: "black" }}>
-              Generation 2
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#generation3" style={{ color: "black" }}>
-              Generation 3
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#generation4" style={{ color: "black" }}>
-              Generation 4
-            </NavDropdown.Item>
+            {/* ... Dropdown items ... */}
           </NavDropdown>
           <Form className="d-flex">
             <FormControl
@@ -71,6 +63,8 @@ function App() {
               placeholder="Search"
               className="mr-2"
               aria-label="Search"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              value={searchTerm}
             />
             <Button variant="outline-light">Search</Button>
           </Form>
@@ -80,13 +74,13 @@ function App() {
       {/* Container for PokemonCards */}
       <div className="container mt-3">
         <div className="row">
-          {pokemonList.map((pokemon) => (
+          {filteredPokemonList.map((pokemon) => (
             <PokemonCard
               key={pokemon.id}
               id={pokemon.id}
               name={pokemon.name}
               spriteUrl={pokemon.sprites.front_default}
-              types={pokemon.types.map((type) => type.type.name)} // Extracting type names
+              types={pokemon.types.map((type) => type.type.name)}
             />
           ))}
         </div>
