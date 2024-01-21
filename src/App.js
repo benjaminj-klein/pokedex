@@ -13,6 +13,7 @@ function App() {
   const [pokemonList, setPokemonList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  //fetch data from pokeapi
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {

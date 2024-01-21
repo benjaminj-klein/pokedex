@@ -20,6 +20,13 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
     background: backgroundColor,
   };
 
+  const nameStyle = {
+    fontSize: "2em", // 3 times larger
+    padding: "5px", // Add padding for the box effect
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderRadius: "5px",
+  };
+
   const handleCardClick = () => {
     setShowModal(true);
   };
@@ -45,7 +52,7 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
   }
 
   function getTypeColor(type) {
-    // Map Pokemon types to colors (you can customize this)
+    // Map Pokemon types to colors
     const typeColors = {
       normal: "#A8A77A",
       fire: "#EE8130",
@@ -76,7 +83,7 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
         <div style={cardIdStyle}>{id}</div>
         <img src={spriteUrl} alt={name} className="card-img-top" />
         <div className="card-body d-flex flex-column align-items-center justify-content-end">
-          <p className="card-text">{capitalizedName}</p>
+          <p style={nameStyle}>{capitalizedName}</p>
         </div>
       </div>
 
