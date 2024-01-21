@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { Bar } from "react-chartjs-2";
+import "chart.js/auto";
 
 const PokemonDetails = ({ pokemonId, showModal, handleClose }) => {
   const [pokemonDetails, setPokemonDetails] = useState(null);
@@ -57,10 +59,89 @@ const PokemonDetails = ({ pokemonId, showModal, handleClose }) => {
         <Modal.Title>{pokemonDetails.name}'s Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img
-          src={pokemonDetails.sprites.front_default}
-          alt={pokemonDetails.name}
-        />
+        <Modal.Body>
+          <img
+            src={pokemonDetails.sprites.front_default}
+            alt={pokemonDetails.name}
+            onLoad={() => window.dispatchEvent(new Event("resize"))}
+          />
+
+          <Bar
+            data={{
+              labels: [
+                "HP",
+                "Attack",
+                "Defense",
+                "Special Attack",
+                "Special Defense",
+                "Speed",
+              ],
+              datasets: [
+                {
+                  label: "Base Stat",
+                  data: [
+                    pokemonDetails.stats.find((stat) => stat.stat.name === "hp")
+                      ?.base_stat || 0,
+                    pokemonDetails.stats.find(
+                      (stat) => stat.stat.name === "attack"
+                    )?.base_stat || 0,
+                    pokemonDetails.stats.find(
+                      (stat) => stat.stat.name === "defense"
+                    )?.base_stat || 0,
+                    pokemonDetails.stats.find(
+                      (stat) => stat.stat.name === "special-attack"
+                    )?.base_stat || 0,
+                    pokemonDetails.stats.find(
+                      (stat) => stat.stat.name === "special-defense"
+                    )?.base_stat || 0,
+                    pokemonDetails.stats.find(
+                      (stat) => stat.stat.name === "speed"
+                    )?.base_stat || 0,
+                  ],
+                  backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                    "rgba(255, 159, 64, 0.2)",
+                  ],
+                  borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(153, 102, 255, 1)",
+                    "rgba(255, 159, 64, 1)",
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            options={{
+              indexAxis: "y", // Use 'y' to make it a horizontal bar chart
+              scales: {
+                x: {
+                  beginAtZero: true,
+                  max: 150, // Adjust the max value based on your data
+                },
+              },
+              plugins: {
+                legend: {
+                  display: false,
+                },
+                tooltip: {
+                  callbacks: {
+                    label: (context) => `${context.label}: ${context.parsed.y}`,
+                  },
+                },
+              },
+            }}
+          />
+
+          {/* Other details... */}
+        </Modal.Body>
+
         <p>
           HP:{" "}
           {
