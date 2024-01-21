@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+//import { Modal, Button } from "react-bootstrap";
+import PokemonDetails from "./PokemonDetails";
 
 const PokemonCard = ({ id, name, spriteUrl, types }) => {
   const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -21,6 +22,10 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
 
   const handleCardClick = () => {
     setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   function getBackgroundColor(types) {
@@ -67,11 +72,7 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
 
   return (
     <div className="col-lg-2 col-md-4 col-sm-12 mb-4">
-      <div
-        className="card rounded"
-        style={cardStyle}
-        onClick={handleCardClick} // Add onClick handler
-      >
+      <div className="card rounded" style={cardStyle} onClick={handleCardClick}>
         <div style={cardIdStyle}>{id}</div>
         <img src={spriteUrl} alt={name} className="card-img-top" />
         <div className="card-body d-flex flex-column align-items-center justify-content-end">
@@ -79,21 +80,11 @@ const PokemonCard = ({ id, name, spriteUrl, types }) => {
         </div>
       </div>
 
-      {/* Blank Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{capitalizedName}'s Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {/* Add any content you want for the modal */}
-          <p>This is a blank modal for {capitalizedName}.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <PokemonDetails
+        pokemonId={id}
+        showModal={showModal}
+        handleClose={handleCloseModal}
+      />
     </div>
   );
 };
