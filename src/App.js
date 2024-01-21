@@ -46,7 +46,7 @@ function App() {
     <div className="App">
       {/* Bootstrap Navbar with Search Bar and Dropdown */}
       <Navbar bg="danger" variant="dark">
-        <Container>
+        <Container fluid className="px-5">
           <Navbar.Brand href="#home" style={{ color: "white" }}>
             Pokedex
           </Navbar.Brand>
@@ -55,8 +55,12 @@ function App() {
             id="basic-nav-dropdown"
             className="ml-auto"
           >
-            {/* ... Dropdown items ... */}
+            <NavDropdown.Item href="#generation1">
+              Generation 1
+            </NavDropdown.Item>
+            {/* ... other dropdown items ... */}
           </NavDropdown>
+
           <Form className="d-flex">
             <FormControl
               type="search"
@@ -72,7 +76,7 @@ function App() {
       </Navbar>
 
       {/* Container for PokemonCards */}
-      <div className="container mt-3">
+      <div className="container-fluid mt-3 px-5">
         <div className="row">
           {filteredPokemonList.map((pokemon) => (
             <PokemonCard
