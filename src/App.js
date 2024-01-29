@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="App">
       {/* Bootstrap Navbar with Search Bar and Dropdown */}
-      <Navbar bg="danger" variant="dark">
+      <Navbar bg="danger" variant="dark" fixed="top">
         <Container fluid className="px-5">
           <Navbar.Brand href="#home" style={{ color: "white" }}>
             Pokedex
@@ -77,7 +77,7 @@ function App() {
       </Navbar>
 
       {/* Container for PokemonCards */}
-      <div className="container-fluid mt-3 px-5">
+      <div className="container-fluid mt-5 px-5" style={{ paddingTop: "40px" }}>
         <div className="row">
           {filteredPokemonList.map((pokemon) => (
             <PokemonCard
